@@ -1,0 +1,44 @@
+{
+  "name": "Narender Kumar - Interactive 3D Portfolio",
+  "short_name": "Portfolio",
+  "description": "Interactive 3D portfolio with immersive city exploration featuring projects, certifications, and achievements",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "icons": [],
+  "screenshots": [],
+  "categories": [
+    "productivity",
+    "portfolio",
+    "business"
+  ],
+  "shortcuts": [
+    {
+      "name": "View Projects",
+      "short_name": "Projects",
+      "description": "View my portfolio projects",
+      "url": "/#projects",
+      "icons": [
+        {
+          "src": "/favicon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "View Contact",
+      "short_name": "Contact",
+      "description": "Contact information",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/favicon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

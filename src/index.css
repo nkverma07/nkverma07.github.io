@@ -1,0 +1,11 @@
+/* Material-UI and CssBaseline handle all global styling */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
