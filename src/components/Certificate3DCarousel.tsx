@@ -29,6 +29,8 @@ const categoryColors: { [key: string]: string } = {
   'Database': '#3b82f6',
   'Development': '#8b5cf6',
   'Platform': '#ec4899',
+  'Mobile': '#06b6d4',
+  'Data Science': '#a855f7',
 }
 
 function CertificateCard3D({ certificate, position, rotation, onClick }: CertificateCardProps) {

@@ -493,6 +493,8 @@ function AppContent() {
                 'Database': '#3b82f6',
                 'Development': '#8b5cf6',
                 'Platform': '#ec4899',
+                'Mobile': '#06b6d4',
+                'Data Science': '#a855f7',
               };
               const categoryColor = categoryColors[cert.category] || '#6366f1';
               
