@@ -339,15 +339,32 @@ function AppContent() {
                 }}
               >
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="flex-start">
-                  <Box 
-                    sx={{ 
-                      fontSize: { xs: '48px', sm: '64px' },
-                      lineHeight: 1,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {icons[idx]}
-                  </Box>
+                  {(project as { image?: string }).image ? (
+                    <Box
+                      component="img"
+                      src={(project as { image?: string }).image}
+                      alt={`${project.title} logo`}
+                      loading="lazy"
+                      sx={{
+                        width: { xs: 48, sm: 64 },
+                        height: { xs: 48, sm: 64 },
+                        borderRadius: 2,
+                        objectFit: 'cover',
+                        flexShrink: 0,
+                        boxShadow: `0 4px 16px ${colors[idx]}40`,
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      sx={{
+                        fontSize: { xs: '48px', sm: '64px' },
+                        lineHeight: 1,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {icons[idx]}
+                    </Box>
+                  )}
                   
                   <Box sx={{ flex: 1 }}>
                     <Typography 

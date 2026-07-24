@@ -99,6 +99,7 @@ export const portfolioData = {
         'Android QR code and barcode scanner app, published on the Google Play Store.',
       technologies: ['Android'],
       features: [],
+      image: '/logos/qr-scanner.png',
       link: 'https://play.google.com/store/apps/details?id=com.narender.qrscanner&hl=en_IN',
     },
     {
@@ -107,6 +108,7 @@ export const portfolioData = {
         'Android video downloader and saver app, published on the Google Play Store.',
       technologies: ['Android'],
       features: [],
+      image: '/logos/video-downloader.jpg',
       link: 'https://play.google.com/store/apps/details?id=com.goalfinstech.downloader.videodownloader.videosaver.allinvideodownloader&hl=en_IN',
     },
   ],
