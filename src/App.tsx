@@ -7,10 +7,9 @@ import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import { getTheme } from './theme/theme'
 import ThemeToggle from './components/ThemeToggle'
 import HeroSection from './components/sections/HeroSection'
-import Gallery3D from './components/Gallery3D'
 import { portfolioData } from './data/portfolioData'
 import { Card, CardContent } from '@mui/material'
-import { School, EmojiEvents, Download, Verified } from '@mui/icons-material'
+import { School, Download, Verified } from '@mui/icons-material'
 import { initializeStructuredData } from './utils/structuredData'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -190,22 +189,7 @@ function AppContent() {
             >
               Experience
             </Button>
-            <Button 
-              onClick={() => scrollToSection('achievements')}
-              sx={{ 
-                textTransform: 'none', 
-                display: { xs: 'none', sm: 'inline-flex' },
-                color: theme.palette.text.primary,
-                '&:hover': {
-                  backgroundColor: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.1)'
-                    : 'rgba(0, 0, 0, 0.05)',
-                }
-              }}
-            >
-              Achievements
-            </Button>
-            <Button 
+            <Button
               onClick={() => scrollToSection('contact')}
               sx={{ 
                 textTransform: 'none',
@@ -218,6 +202,26 @@ function AppContent() {
               }}
             >
               Contact
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              component="a"
+              href={portfolioData.personal.resume}
+              download={portfolioData.personal.resumeFileName}
+              startIcon={<Download />}
+              sx={{
+                textTransform: 'none',
+                fontWeight: 600,
+                color: theme.palette.text.primary,
+                borderColor: theme.palette.divider,
+                '&:hover': {
+                  borderColor: theme.palette.primary.main,
+                  color: theme.palette.primary.main,
+                },
+              }}
+            >
+              Resume
             </Button>
             <ThemeToggle />
           </Stack>
@@ -241,7 +245,7 @@ function AppContent() {
             Proficient in Firebase, Python, C++, Git, and Data Structures & Algorithms (DSA). Passionate about creating responsive, high-performance applications.
           </Typography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} justifyContent="center" sx={{ mt: 4 }}>
-            {['8.06 CGPA in AI & DS', 'Runner-up in Hack Arya Verse', 'Full Stack Intern at mPass', '6+ Certifications'].map((highlight, idx) => (
+            {['8.06 CGPA in AI & DS', 'Software Engineer at mPass', '6+ Certifications'].map((highlight, idx) => (
               <Box key={idx} sx={{ textAlign: 'center', p: 2, bgcolor: theme.palette.background.paper, borderRadius: 2 }}>
                 <Typography variant="h6" fontWeight={600}>{highlight}</Typography>
               </Box>
@@ -458,18 +462,62 @@ function AppContent() {
           <Typography variant="h3" align="center" gutterBottom fontWeight={700}>
             Experience
           </Typography>
-          <Box sx={{ mt: 4, p: 3, bgcolor: theme.palette.background.default, borderRadius: 2 }}>
-            <Typography variant="h5" fontWeight={600}>Full Stack Developer Intern</Typography>
-            <Typography variant="h6" color="primary">mPass Lobby Management Pvt. Ltd.</Typography>
-            <Typography variant="body2" color="text.secondary">Jaipur, Rajasthan | June 2025 – July 2025</Typography>
-            <Box sx={{ mt: 2 }}>
-              <Typography variant="body1" paragraph>• Built and optimized frontend using Flutter</Typography>
-              <Typography variant="body1" paragraph>• Implemented state management with Provider</Typography>
-              <Typography variant="body1" paragraph>• Improved UI performance with widget tree debugging</Typography>
-              <Typography variant="body1">• Contributed to live projects and internal development tasks</Typography>
-            </Box>
-          </Box>
-          
+          <Stack spacing={3} sx={{ mt: 4 }}>
+            {portfolioData.experience.map((job, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  p: { xs: 2.5, sm: 3, md: 4 },
+                  bgcolor: theme.palette.background.default,
+                  borderRadius: 2,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  borderLeft: '4px solid',
+                  borderLeftColor: 'primary.main',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    boxShadow: '0 8px 30px rgba(99, 102, 241, 0.15)',
+                    transform: 'translateY(-4px)',
+                  },
+                }}
+              >
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 1, mb: 0.5 }}>
+                  <Typography variant="h5" fontWeight={600}>{job.role}</Typography>
+                  <Chip
+                    label={job.duration}
+                    size="small"
+                    sx={{ bgcolor: 'primary.main', color: 'white', fontWeight: 700 }}
+                  />
+                </Box>
+                <Typography variant="h6" color="primary">{job.company}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {job.location} • {job.type}
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mt: 2, lineHeight: 1.8 }}>
+                  {job.description}
+                </Typography>
+                <Box component="ul" sx={{ mt: 2, mb: 0, pl: 3, display: 'grid', gap: 1 }}>
+                  {job.responsibilities.map((item, i) => (
+                    <Typography component="li" variant="body1" key={i} sx={{ lineHeight: 1.7 }}>
+                      {item}
+                    </Typography>
+                  ))}
+                </Box>
+                <Stack direction="row" spacing={1} sx={{ mt: 3, flexWrap: 'wrap', gap: 1 }}>
+                  {job.technologies.map((tech, i) => (
+                    <Chip
+                      key={i}
+                      label={tech}
+                      size="small"
+                      variant="outlined"
+                      sx={{ fontWeight: 600, borderColor: 'primary.main', color: 'primary.main' }}
+                    />
+                  ))}
+                </Stack>
+              </Box>
+            ))}
+          </Stack>
+
           {/* Certifications Section */}
           <Typography variant="h4" align="center" gutterBottom fontWeight={700} sx={{ mt: 6 }}>
             🎓 Certifications
@@ -631,191 +679,6 @@ function AppContent() {
         </Container>
       </Box>
 
-      {/* Achievements & Gallery Section */}
-      <Box id="achievements" sx={{ 
-        py: { xs: 4, sm: 6, md: 8 }, 
-        px: { xs: 2, sm: 3 },
-        background: theme.palette.mode === 'dark'
-          ? 'linear-gradient(180deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)'
-          : 'linear-gradient(180deg, #f8fafc 0%, #e0e7ff 50%, #f8fafc 100%)',
-      }}>
-        <Container maxWidth="lg">
-          <Typography variant="h3" align="center" gutterBottom fontWeight={700} sx={{
-            background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            mb: 2,
-          }}>
-            🎉 Achievements & Gallery
-          </Typography>
-          <Typography variant="h6" align="center" color="text.secondary" paragraph sx={{ mb: 6, px: { xs: 2, sm: 0 } }}>
-            My achievements and accomplishments
-          </Typography>
-
-          {/* Achievements Cards */}
-          <Box sx={{ 
-            display: 'grid', 
-            gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
-            gap: 4,
-            mb: 8,
-            perspective: '1000px'
-          }}>
-            {portfolioData.achievements.map((achievement, idx) => (
-              <Card key={idx} sx={{ 
-                  height: '100%',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  background: achievement.highlight
-                    ? theme.palette.mode === 'dark'
-                      ? 'linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%)'
-                      : 'linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%)'
-                    : theme.palette.mode === 'dark'
-                      ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%)'
-                      : 'linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(139, 92, 246, 0.03) 100%)',
-                  backdropFilter: 'blur(10px)',
-                  border: achievement.highlight ? '3px solid' : '2px solid',
-                  borderColor: achievement.highlight ? 'warning.main' : 'primary.main',
-                  boxShadow: achievement.highlight 
-                    ? '0 8px 32px rgba(251, 191, 36, 0.3), 0 0 20px rgba(251, 191, 36, 0.2)'
-                    : '0 4px 20px rgba(99, 102, 241, 0.2)',
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transformStyle: 'preserve-3d',
-                  '&:hover': {
-                    transform: 'translateY(-16px) rotateX(3deg) scale(1.02)',
-                    boxShadow: achievement.highlight 
-                      ? '0 20px 50px rgba(251, 191, 36, 0.4), 0 0 40px rgba(251, 191, 36, 0.3)'
-                      : '0 12px 40px rgba(99, 102, 241, 0.3)',
-                  },
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: '5px',
-                    background: achievement.highlight
-                      ? 'linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24)'
-                      : 'linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1)',
-                    backgroundSize: '200% 100%',
-                    animation: 'shimmer 3s infinite',
-                  },
-                  '@keyframes shimmer': {
-                    '0%': { backgroundPosition: '200% 0' },
-                    '100%': { backgroundPosition: '-200% 0' },
-                  }
-                }}>
-                  <CardContent sx={{ p: 4 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-                      <Box sx={{
-                        width: 60,
-                        height: 60,
-                        borderRadius: '16px',
-                        background: achievement.highlight
-                          ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
-                          : 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: achievement.highlight
-                          ? '0 8px 24px rgba(251, 191, 36, 0.4)'
-                          : '0 8px 24px rgba(99, 102, 241, 0.3)',
-                        animation: achievement.highlight ? 'pulse 2s infinite' : 'none',
-                        '@keyframes pulse': {
-                          '0%, 100%': { transform: 'scale(1)' },
-                          '50%': { transform: 'scale(1.05)' },
-                        }
-                      }}>
-                        {achievement.highlight ? (
-                          <EmojiEvents sx={{ color: 'white', fontSize: 36 }} />
-                        ) : (
-                          <Verified sx={{ color: 'white', fontSize: 36 }} />
-                        )}
-                      </Box>
-                      <Chip
-                        label={achievement.date}
-                        size="small"
-                        sx={{
-                          bgcolor: achievement.highlight ? 'warning.main' : 'primary.main',
-                          color: 'white',
-                          fontWeight: 700,
-                          px: 2,
-                          boxShadow: 2
-                        }}
-                      />
-                    </Box>
-                    <Typography variant="h5" gutterBottom fontWeight={700} sx={{
-                      background: achievement.highlight
-                        ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
-                        : 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      mb: 2,
-                      lineHeight: 1.3
-                    }}>
-                      {achievement.title}
-                    </Typography>
-                    <Box sx={{
-                      p: 2,
-                      borderRadius: 2,
-                      bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)',
-                      border: '1px dashed',
-                      borderColor: 'divider',
-                      mb: 3
-                    }}>
-                      <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8 }}>
-                        {achievement.description}
-                      </Typography>
-                    </Box>
-                    {achievement.pdfPath && (
-                      <Button
-                        variant="contained"
-                        size="medium"
-                        startIcon={<Download />}
-                        onClick={() => window.open(achievement.pdfPath, '_blank')}
-                        sx={{
-                          background: achievement.highlight
-                            ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
-                            : 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-                          color: 'white',
-                          fontWeight: 700,
-                          py: 1.5,
-                          px: 4,
-                          boxShadow: achievement.highlight
-                            ? '0 4px 20px rgba(251, 191, 36, 0.4)'
-                            : '0 4px 20px rgba(99, 102, 241, 0.3)',
-                          '&:hover': {
-                            boxShadow: achievement.highlight
-                              ? '0 6px 30px rgba(251, 191, 36, 0.6)'
-                              : '0 6px 30px rgba(99, 102, 241, 0.5)',
-                            transform: 'scale(1.05)'
-                          }
-                        }}
-                      >
-                        View Certificate
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
-            ))}
-          </Box>
-
-          {/* Photo Gallery */}
-          <Typography variant="h3" align="center" gutterBottom fontWeight={700} sx={{ 
-            mt: 8, 
-            mb: 4,
-            background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}>
-            📸 3D Photo Gallery
-          </Typography>
-          <Typography variant="body1" align="center" color="text.secondary" sx={{ mb: 4 }}>
-            Navigate through my achievements in an immersive 3D space
-          </Typography>
-          <Gallery3D images={portfolioData.gallery} />
-        </Container>
-      </Box>
-
       {/* Contact Section */}
       <Box id="contact" sx={{ py: { xs: 4, sm: 6, md: 8 }, px: { xs: 2, sm: 3 }, backgroundColor: theme.palette.background.paper }}>
         <Container maxWidth="md">
@@ -837,6 +700,32 @@ function AppContent() {
             <Box sx={{ textAlign: 'center', p: 2, bgcolor: theme.palette.background.paper, borderRadius: 2 }}>
               <Typography variant="h6">📍 Location</Typography>
               <Typography variant="body1" color="primary">Jaipur, Rajasthan, India</Typography>
+            </Box>
+            <Box sx={{ textAlign: 'center', pt: 2 }}>
+              <Button
+                variant="contained"
+                size="large"
+                component="a"
+                href={portfolioData.personal.resume}
+                download={portfolioData.personal.resumeFileName}
+                startIcon={<Download />}
+                sx={{
+                  background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                  color: 'white',
+                  fontWeight: 700,
+                  textTransform: 'none',
+                  py: 1.5,
+                  px: 4,
+                  boxShadow: '0 4px 20px rgba(99, 102, 241, 0.3)',
+                  '&:hover': {
+                    boxShadow: '0 6px 30px rgba(99, 102, 241, 0.5)',
+                    transform: 'scale(1.03)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                Download My Resume
+              </Button>
             </Box>
           </Stack>
         </Container>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Container, Typography, Button, Stack, IconButton, useTheme as useMuiTheme } from '@mui/material'
-import { GitHub, LinkedIn, Email, Phone, LocationOn } from '@mui/icons-material'
+import { GitHub, LinkedIn, Email, Phone, LocationOn, Download } from '@mui/icons-material'
 import { portfolioData } from '../../data/portfolioData'
 
 interface HeroSectionProps {
@@ -152,6 +152,32 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
               }}
             >
               View Projects
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              component="a"
+              href={personal.resume}
+              download={personal.resumeFileName}
+              startIcon={<Download />}
+              sx={{
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+                textTransform: 'none',
+                borderColor: theme.palette.secondary.main,
+                color: theme.palette.secondary.main,
+                '&:hover': {
+                  borderColor: theme.palette.secondary.main,
+                  backgroundColor: theme.palette.mode === 'dark'
+                    ? 'rgba(244, 143, 177, 0.08)'
+                    : 'rgba(220, 0, 78, 0.06)',
+                  transform: 'translateY(-2px)',
+                },
+                transition: 'all 0.3s ease',
+              }}
+            >
+              Download Resume
             </Button>
           </Stack>
 
